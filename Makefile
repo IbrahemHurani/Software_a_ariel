@@ -8,21 +8,20 @@ FLAGS= -Wall -g
 all:loops	recursived	loopd	recursives	mains	maindloop	maindrec
 
 loops:libclassloops.a
-
-libclassloops.a:	$(OBJECTS_loop)	$(OBJECTS_Basic)	
-	$(AR)	-rcs	libclassloops.a	$(OBJECTS_loop)	$(OBJECTS_Basic)	
+libclassloops.a:	$(OBJECTS_Basic)	$(OBJECTS_loop)		
+	$(AR)	-rcs	libclassloops.a	$(OBJECTS_Basic)	$(OBJECTS_loop)		
 
 recursives:libclassrec.a
-libclassrec.a:	$(OBJECTS_REC)	$(OBJECTS_Basic)
-	$(AR)	-rcs	libclassrec.a	$(OBJECTS_REC)	$(OBJECTS_Basic)	
+libclassrec.a:	$(OBJECTS_Basic)	$(OBJECTS_REC)	
+	$(AR)	-rcs	libclassrec.a	$(OBJECTS_Basic)	$(OBJECTS_REC)		
 
 recursived:	libclassrec.so
 libclassrec.so:	$(OBJECTS_REC)	$(OBJECTS_Basic)	
 	$(CC)	-shared	-o	libclassrec.so	$(OBJECTS_REC)	$(OBJECTS_Basic)	
 
 loopd:libclassloops.so 
-libclassloops.so:$(OBJECTS_loop)	$(OBJECTS_Basic)	
-	$(CC)	-shared	-o	libclassloops.so	$(OBJECTS_loop)	$(OBJECTS_Basic)	
+libclassloops.so:$(OBJECTS_Basic)	$(OBJECTS_loop)		
+	$(CC)	-shared	-o	libclassloops.so	$(OBJECTS_Basic)	$(OBJECTS_loop)		
 
 mains:	$(OBJECTS_MAIN)	loops	recursives
 	$(CC)	$(FLAGS)	-o	mains	$(OBJECTS_MAIN)	libclassloops.a	libclassrec.a
@@ -47,5 +46,5 @@ basicClassification.o:	basicClassification.c	NumClass.h
 
 .PHONY:clean all
 
-clean all:
+clean:
 	rm	-f	*.o	*.a	*.so	mains	maindrec	maindloop
